@@ -23,31 +23,34 @@ namespace OathKeeper
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new ViewModel();
+            DataContext = new ViewModel(ruler,main_stack,main_edit_scroll);
             main_edit_scroll.ScrollToEnd();
+            scroll_max_offset = (float)main_edit_scroll.VerticalOffset;
+
+
+        }
+        float scroll_max_offset = 0;
+     
+
+        private void main_slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if(test_text!=null)
+                test_text.Text=e.NewValue.ToString();
         }
 
-        private void button5_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
+           
+        }
+
+        private void main_edit_scroll_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Console.WriteLine((int)(Mouse.GetPosition((sender as ScrollViewer)).X/72.1f));
+            //Console.WriteLine(scroll_max_offset - main_edit_scroll.VerticalOffset);
+            Console.WriteLine(main_edit_scroll.ScrollableHeight - main_edit_scroll.VerticalOffset+ ((sender as ScrollViewer).ActualHeight- Mouse.GetPosition((sender as ScrollViewer)).Y));
             
         }
-        private void button4_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-        private void button3_Click(object sender, RoutedEventArgs e)
-        {
 
-        }
-        private void button2_Click(object sender, RoutedEventArgs e)
-        {
 
-        }
-        private void button1_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-       
     }
 }

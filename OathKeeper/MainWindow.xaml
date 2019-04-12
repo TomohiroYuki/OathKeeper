@@ -4,9 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OathKeeper"
+        xmlns:core="clr-namespace:System;assembly=mscorlib"
         x:Class="OathKeeper.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="1280">
+    <Window.Resources>
+        <GridLength x:Key="lane_width">73.3</GridLength>
+    </Window.Resources>
     <Grid Margin="0,0,3.6,0">
         <Grid HorizontalAlignment="Left" Height="694" VerticalAlignment="Top" Width="1270">
             <Grid.RowDefinitions>
@@ -32,42 +36,49 @@
 
                 <Rectangle Fill="WhiteSmoke" Height="500" Canvas.Left="344" Stroke="Gray" Canvas.Top="10" Width="73"/>
                 <Rectangle Fill="#FFE0E0FF" Height="500" Canvas.Left="417" Stroke="Gray" Canvas.Top="10" Width="73"/>
+                <Rectangle Fill="WhiteSmoke" Stroke="Gray"  Canvas.Left="636" Canvas.Top="10" Width="74" Height="500"></Rectangle>
+                <!--<Button Name="button5" Content="Button" Canvas.Left="636" Canvas.Top="10" Width="74" Height="500" Click="button5_Click" IsHitTestVisible="True">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Rectangle Fill="WhiteSmoke" Stroke="Gray"></Rectangle>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>-->
 
-                <Button Name="button5" Content="Button" Canvas.Left="636" Canvas.Top="10" Width="74" Height="500" Click="button5_Click">
-                    <Button.Template>
-                        <ControlTemplate>
-                            <Rectangle Stroke="Gray"></Rectangle>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-                <Button Name="button4" Content="Button" Canvas.Left="563" Canvas.Top="10" Width="74" Height="500" Click="button4_Click" >
+                <!--<Button Name="button4" Content="Button" Canvas.Left="563" Canvas.Top="10" Width="74" Height="500" Click="button4_Click" >
                     <Button.Template>
                         <ControlTemplate>
                             <Rectangle Fill="#FFE0E0FF" Stroke="Gray"></Rectangle>
                         </ControlTemplate>
                     </Button.Template>
-                </Button>
-                <Button Name="button3" Content="Button" Canvas.Left="490" Canvas.Top="10" Width="74" Height="500" Click="button3_Click">
+                </Button>-->
+                <Rectangle Fill="#FFE0E0FF" Stroke="Gray" Canvas.Left="563" Canvas.Top="10" Width="74" Height="500"></Rectangle>
+                <Rectangle Stroke="Gray" Canvas.Left="490" Canvas.Top="10" Width="74" Height="500">
+
+                </Rectangle>
+                <!--<Button Name="button3" Content="Button" Canvas.Left="490" Canvas.Top="10" Width="74" Height="500" Click="button3_Click">
                     <Button.Template>
                         <ControlTemplate>
                             <Rectangle Stroke="Gray"></Rectangle>
                         </ControlTemplate>
                     </Button.Template>
-                </Button>
-                <Button Name="button2" Content="Button" Canvas.Left="417" Canvas.Top="10" Width="74" Height="500" Click="button2_Click">
+                </Button>-->
+                <!--<Button Name="button2" Content="Button" Canvas.Left="417" Canvas.Top="10" Width="74" Height="500" Click="button2_Click">
                     <Button.Template>
                         <ControlTemplate>
                             <Rectangle Fill="#FFE0E0FF" Stroke="Gray"></Rectangle>
                         </ControlTemplate>
                     </Button.Template>
-                </Button>
-                <Button Name="button1" Content="Button" Canvas.Left="344" Canvas.Top="10" Width="74" Height="500" Click="button1_Click">
+                </Button>-->
+                <Rectangle Fill="#FFE0E0FF" Stroke="Gray"  Canvas.Left="417" Canvas.Top="10" Width="74" Height="500"></Rectangle>
+                <!--<Button Name="button1" Content="Button" Canvas.Left="344" Canvas.Top="10" Width="74" Height="500" Click="button1_Click">
                     <Button.Template>
                         <ControlTemplate>
-                            <Rectangle Stroke="Gray"></Rectangle>
+                            <Rectangle Fill="#00F5F5F5" Stroke="Gray"></Rectangle>
                         </ControlTemplate>
                     </Button.Template>
-                </Button>
+                </Button>-->
+                <Rectangle Fill="#00F5F5F5" Stroke="Gray"  Canvas.Left="344" Canvas.Top="10" Width="74" Height="500"></Rectangle>
                 <Rectangle Fill="WhiteSmoke" Height="59" Canvas.Left="344" Stroke="Gray" Canvas.Top="509" Width="73"/>
                 <Rectangle Fill="#FFE0E0FF" Height="59" Canvas.Left="417" Stroke="Gray" Canvas.Top="509" Width="74"/>
                 <Rectangle Fill="WhiteSmoke" Height="59" Canvas.Left="490" Stroke="Gray" Canvas.Top="509" Width="74"/>
@@ -75,24 +86,41 @@
                 <Rectangle Fill="WhiteSmoke" Height="59" Canvas.Left="636" Stroke="Gray" Canvas.Top="509" Width="74"/>
                 <Rectangle x:Name="time_slider" Fill="#FFDDDDDD" Height="500" Canvas.Left="709" Stroke="Gray" Canvas.Top="10" Width="26"/>
                 <Rectangle x:Name="time_slider_Copy" Fill="#FFDDDDDD" Height="59" Canvas.Left="709" Stroke="Gray" Canvas.Top="509" Width="26"/>
-                <ScrollViewer Name="main_edit_scroll" Height="500" Canvas.Left="10" Canvas.Top="10" Width="744" >
-                    <Canvas Height="3999" Width="744">
-                        <local:RulerControl x:Name="ruler" ruler_priority="VERTICAL" ruler_direction_x="RIGHT_TO_LEFT" ruler_direction_y="BOTTOM_TO_TOP" Width="723" Height="3999" long_line_division_count="8" long_line_interval_length="350"/>
+                <ScrollViewer Name="main_edit_scroll" Height="500" Canvas.Left="344" Canvas.Top="10" Width="410" Background="Transparent">
+                    <ScrollViewer.InputBindings>
+                        <MouseBinding Command="{Binding command_add_note}" CommandParameter="{Binding  ElementName=main_edit_scroll}" MouseAction="LeftClick" ></MouseBinding>
+                        
+                    </ScrollViewer.InputBindings>
+                    <Canvas Height="3999" Width="400" >
+                        <local:MySoundGameRuler  x:Name="ruler" ruler_priority="VERTICAL" ruler_direction_x="RIGHT_TO_LEFT" ruler_direction_y="BOTTOM_TO_TOP" Width="389" Height="3999" long_line_division_count="8" long_line_interval_length="350" ruler_scale="{Binding SliderValue}" IsHitTestVisible="False"/>
 
-                        <StackPanel Height="500" Canvas.Left="336" Width="387" >
-                            <Grid Height="500" Margin="0,0,0.2,0">
+                        <StackPanel Height="500" Canvas.Left="0" Width="387" Name="main_stack">
+                            <Grid Height="500" Margin="0,0,-51,0">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="74*"/>
-                                    <ColumnDefinition Width="74*"/>
-                                    <ColumnDefinition Width="74*"/>
-                                    <ColumnDefinition Width="74*"/>
-                                    <ColumnDefinition Width="74*"/>
-                                    <ColumnDefinition Width="24*"/>
+                                    <ColumnDefinition Width="{StaticResource lane_width}"/>
+                                    <ColumnDefinition Width="{StaticResource lane_width}"/>
+                                    <ColumnDefinition Width="{StaticResource lane_width}"/>
+                                    <ColumnDefinition Width="{StaticResource lane_width}"/>
+                                    <ColumnDefinition Width="{StaticResource lane_width}"/>
+                                    <ColumnDefinition Width="23"/>
                                 </Grid.ColumnDefinitions>
-                                <Canvas  Grid.Column="1" HorizontalAlignment="Center" Height="4000"  VerticalAlignment="Bottom" Width="74">
-                                    <Button Content="Button" Canvas.Top="3722" Width="75" Canvas.Left="-1"/>
+                                <Canvas  Grid.Column="0" HorizontalAlignment="Center" Height="4000"  VerticalAlignment="Top" Width="74">
+                                    <Button Content="Button" Canvas.Top="3722" Width="72"/>
                                 </Canvas>
-                                <Button Content="Button" Margin="-3,-164,0.8,643" Grid.Column="0" />
+                                <Canvas  Grid.Column="1" HorizontalAlignment="Center" Height="4000"  VerticalAlignment="Top" Width="74">
+                                    <Button Content="Button" Canvas.Top="3722" Width="72" />
+                                </Canvas>
+                              
+                                <Canvas  Grid.Column="2" HorizontalAlignment="Center" Height="4000"  VerticalAlignment="Top" Width="74">
+                                    
+                                </Canvas>
+                                <Canvas  Grid.Column="3" HorizontalAlignment="Center" Height="4000"  VerticalAlignment="Top" Width="74">
+
+                                </Canvas>
+                                <Canvas  Grid.Column="4" HorizontalAlignment="Center" Height="4000"  VerticalAlignment="Top" Width="74">
+
+                                </Canvas>
+                                <Button Content="Button" Margin="2.4,632,68.2,-162" Grid.Column="2" Grid.ColumnSpan="2" />
                             </Grid>
 
                             <!--<Canvas Height="493" Width="44" Margin="172,0,171.2,0"/>-->
@@ -102,6 +130,11 @@
 
                 </ScrollViewer>
 
+                <Slider  Name="main_slider"  Canvas.Left="822" Canvas.Top="528" Width="130" ValueChanged="main_slider_ValueChanged" Maximum="5.0" Minimum="0.5" Value="{Binding SliderValue}" >
+
+                </Slider>
+                <TextBox Name="test_text" Height="23" Canvas.Left="836" TextWrapping="Wrap" Text="{Binding ElementName=main_slider, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Path=Value}"  Canvas.Top="492" Width="72" />
+
 
             </Canvas>
             <Canvas HorizontalAlignment="Left" Height="129" Margin="0,0.4,0,-36.6" Grid.Row="2" VerticalAlignment="Top" Width="1270" Grid.ColumnSpan="2" Background="Gray"/>
@@ -110,6 +143,8 @@
                     <Button Content="Button" Width="75"/>
                     <Button Content="Button" Width="75"/>
                 </ListBox>
+                <Button Content="Button" Canvas.Left="133" Canvas.Top="131" Width="75">
+                </Button>
             </Canvas>
         </Grid>
 

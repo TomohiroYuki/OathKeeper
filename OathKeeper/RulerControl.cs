@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace OathKeeper
 {
@@ -62,7 +63,6 @@ namespace OathKeeper
         TOP_TO_BOTTOM,
         BOTTOM_TO_TOP
     }
-
 
     public class RulerControl : Control
     {
@@ -119,6 +119,7 @@ namespace OathKeeper
 
         float short_line_interval_length { get; set; } = 20.2f;
         //public int long_line_interval_count { get; set; } =4;
+        private bool is_update_rendering = true;
 
         //bool is_middleline_drawable = false;
         protected override void OnRender(DrawingContext drawingContext)
@@ -126,10 +127,10 @@ namespace OathKeeper
             //if()
             Vector offset = new Vector(0, 0);
             Vector direction = new Vector(0, 0);
-            Vector line_extend_direction = new Vector(0,0);
+            Vector line_extend_direction = new Vector(0, 0);
             float actul_length = 0;
 
-            if(ruler_priority==ERulerPriority.HORIZONTAL)
+            if (ruler_priority == ERulerPriority.HORIZONTAL)
             {
                 offset.X = (ruler_direction_x == ERulerDirectionX.RIGHT_TO_LEFT ? ActualWidth : 0);
                 offset.Y = (ruler_direction_y == ERulerDirectionY.BOTTOM_TO_TOP ? ActualHeight : 0);
@@ -145,25 +146,32 @@ namespace OathKeeper
                 actul_length = (float)ActualHeight;
                 line_extend_direction.X = (ruler_direction_x == ERulerDirectionX.LEFT_TO_RIGHT ? 1.0f : -1.0f);
             }
-
-            for(int i = 0; i < actul_length / long_line_interval_length; i++)
+            // ruler_scale = 2;
+            for (int i = 0; i < actul_length / long_line_interval_length; i++)
             {
 
-                Vector line_root = i * direction* long_line_interval_length + offset;
+                Vector line_root = i * direction * long_line_interval_length * ruler_scale + offset;
                 Vector line_top = line_root + line_extend_direction * long_line.length;
                 drawingContext.DrawLine(new Pen(long_line.color, long_line.thickness), new Point(line_root.X, line_root.Y), new Point(line_top.X, line_top.Y));
 
 
-                for(int n=1;n<long_line_division_count;n++)
+                for (int n = 1; n < long_line_division_count; n++)
                 {
-                    Vector short_line_root = direction * long_line_interval_length*((float)n/ (float)long_line_division_count) + line_root;
+                    Vector short_line_root = direction * long_line_interval_length * ((float)n / (float)long_line_division_count) * ruler_scale + line_root;
                     Vector short_line_top = short_line_root + line_extend_direction * short_line.length;
                     drawingContext.DrawLine(new Pen(short_line.color, short_line.thickness), new Point(short_line_root.X, short_line_root.Y), new Point(short_line_top.X, short_line_top.Y));
 
                 }
             }
 
-
+            if (is_update_rendering)
+            { 
+                Task.Run(async () =>
+                {
+                    await Task.Delay(1);
+                    await Dispatcher.BeginInvoke((Action)this.InvalidateVisual);
+                });
+            }
         }
 
 
@@ -232,6 +240,25 @@ namespace OathKeeper
             set { this.SetValue(RulerDirectionY, value); }
         }
         #endregion
+        #region parameter::ruler_scale
+        public static readonly DependencyProperty RulerScale =
+         DependencyProperty.Register("ruler_scale", typeof(float), typeof(RulerControl),
+         new UIPropertyMetadata(1.0f));
+
+        public float ruler_scale
+        {
+            get { return (float)base.GetValue(RulerScale); }
+            set
+            {
+                this.SetValue(RulerScale, value);
+            }
+        }
+        #endregion
+
+        public void UpdateRendering()
+        {
+           
+        }
 
     }
 }

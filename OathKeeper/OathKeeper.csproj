@@ -58,7 +58,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="RulerControl.cs" />
+    <Compile Include="MySoundGameRuler.cs" />
+    <Compile Include="Note.cs" />
+    <Compile Include="NotesManager.cs" />
+    <Compile Include="RulerControl.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="RulerScale.cs" />
     <Compile Include="ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
