@@ -41,8 +41,6 @@ namespace OathKeeper
         private void Button_Click(object sender, RoutedEventArgs e)
         {
            
-
-
         }
 
         private void main_edit_scroll_MouseDown(object sender, MouseButtonEventArgs e)
