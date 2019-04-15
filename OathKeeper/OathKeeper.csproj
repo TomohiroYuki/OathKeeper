@@ -58,7 +58,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="SingleRulerControl.cs" />
     <Compile Include="MySoundGameRuler.cs" />
     <Compile Include="Note.cs" />
     <Compile Include="NotesManager.cs" />

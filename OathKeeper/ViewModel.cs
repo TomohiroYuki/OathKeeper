@@ -14,7 +14,7 @@ namespace OathKeeper
     {
 
         //
-        public ViewModel(StackPanel in_stack_panel,ScrollViewer in_scroll)
+        public ViewModel(MySoundGameRuler in_ruler,StackPanel in_stack_panel,ScrollViewer in_scroll)
         {
             var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w is MainWindow);
             notes_manager = new NotesManager(in_stack_panel);
@@ -22,6 +22,7 @@ namespace OathKeeper
 
 
             //苦肉の策
+            ruler = in_ruler;
             main_stack = in_stack_panel;
             scroll = in_scroll;
 
