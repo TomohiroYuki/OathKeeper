@@ -23,7 +23,7 @@ namespace OathKeeper
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new ViewModel(ruler,main_stack,main_edit_scroll);
+            DataContext = new ViewModel(main_stack,main_edit_scroll);
             main_edit_scroll.ScrollToEnd();
             scroll_max_offset = (float)main_edit_scroll.VerticalOffset;
 

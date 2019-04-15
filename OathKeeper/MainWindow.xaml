@@ -92,9 +92,10 @@
                         
                     </ScrollViewer.InputBindings>
                     <Canvas Height="3999" Width="400" >
-                        <local:MySoundGameRuler  x:Name="ruler" ruler_priority="VERTICAL" ruler_direction_x="RIGHT_TO_LEFT" ruler_direction_y="BOTTOM_TO_TOP" Width="389" Height="3999" long_line_division_count="8" long_line_interval_length="350" ruler_scale="{Binding SliderValue}" IsHitTestVisible="False"/>
+                        <!--<local:MySoundGameRuler  x:Name="ruler" ruler_priority="VERTICAL" ruler_direction_x="RIGHT_TO_LEFT" ruler_direction_y="BOTTOM_TO_TOP" Width="389" Height="3999" long_line_division_count="8" long_line_interval_length="350" ruler_scale="{Binding SliderValue}" IsHitTestVisible="False"/>-->
 
-                        <StackPanel Height="500" Canvas.Left="0" Width="387" Name="main_stack">
+                        <StackPanel Height="494" Canvas.Left="0" Width="387" Name="main_stack">
+                            
                             <Grid Height="500" Margin="0,0,-51,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="{StaticResource lane_width}"/>
@@ -122,6 +123,8 @@
                                 </Canvas>
                                 <Button Content="Button" Margin="2.4,632,68.2,-162" Grid.Column="2" Grid.ColumnSpan="2" />
                             </Grid>
+                            <local:SingleRulerControl ruler_direction_x="RIGHT_TO_LEFT"/>
+
 
                             <!--<Canvas Height="493" Width="44" Margin="172,0,171.2,0"/>-->
                         </StackPanel>
